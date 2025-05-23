@@ -43,7 +43,7 @@ public class NbQuickCheck {
     int min = root.value;
     for (var i : root.children) {
       int childMin = minVal(i);
-      min = Math.min(childMin, min);
+      min = Math.min(min, childMin);
     }
     
     return min;
