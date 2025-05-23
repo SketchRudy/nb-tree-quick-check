@@ -1,5 +1,7 @@
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class NbQuickCheck {
 
@@ -11,8 +13,18 @@ public class NbQuickCheck {
    * @param root the root node to start traversal from
    */
   public static void preOrder(Map<Integer, List<Integer>> tree, int root) {
-    if(!tree.containsKey(root)) {
-      return;
+    Set<Integer> visited = new HashSet<>();
+    preOrderHelper(tree, root, visited);
+  }
+
+  public static void preOrderHelper(Map<Integer, List<Integer>> tree, int root, Set<Integer> visited) {
+    if(!tree.containsKey(root) || visited.contains(root)) return;
+
+    System.out.println(root);
+    visited.add(root);
+
+    for (int i : tree.get(root)) {
+        preOrderHelper(tree, i, visited);
     }
   }
 
@@ -24,7 +36,17 @@ public class NbQuickCheck {
    * @return the minimum value in the tree or Integer.MAX_VALUE if root is null
    */
   public static int minVal(Node<Integer> root) {
-    return -1;
+    if (root == null) {
+      return Integer.MAX_VALUE;
+    }
+
+    int min = root.value;
+    for (var i : root.children) {
+      int childMin = minVal(i);
+      min = Math.min(childMin, min);
+    }
+    
+    return min;
   }
   
 }
